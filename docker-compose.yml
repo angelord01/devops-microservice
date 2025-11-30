@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  devops-microservice:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      replicas: 2
+
+  load-balancer:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - devops-microservice
+
+  # Servicio para testing
+  test-runner:
+    build: .
+    command: ["python", "-m", "pytest", "tests/", "-v"]
+    environment:
+      - FLASK_ENV=testing
