@@ -1,6 +1,8 @@
+import json
+
 import pytest
 import requests
-import json
+
 from src.app import app
 from src.auth_manager import api_manager
 
