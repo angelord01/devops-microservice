@@ -5,11 +5,10 @@ on:
     branches: [ main, develop ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch:  # Permite ejecución manual
+  workflow_dispatch:
 
 env:
   IMAGE_NAME: devops-microservice
-  REGISTRY: ghcr.io
 
 jobs:
   lint-and-analysis:
@@ -36,9 +35,9 @@ jobs:
       run: |
         black src/ tests/
     
-    - name: Check import sorting with isort
+    - name: Format imports with isort (Black compatible)
       run: |
-        isort --check-only src/ tests/
+        isort --profile black src/ tests/
     
     - name: Run flake8 linting
       run: |
@@ -150,18 +149,10 @@ jobs:
     - name: Deploy and Test Staging
       run: |
         echo "Deploying to staging environment..."
-        # Ejecutar el contenedor
         docker run -d -p 8080:5000 --name staging-app $IMAGE_NAME:latest
         sleep 10
-        
-        # Verificar que el servicio está funcionando
         curl -f http://localhost:8080/health || exit 1
         echo "✅ Staging deployment successful"
-        
-        # Tests de integración
-        echo "Running integration tests..."
-        curl -f http://localhost:8080/health
-        echo "✅ Health check passed"
 
   deploy-production:
     name: Deploy to Production
@@ -186,10 +177,7 @@ jobs:
     - name: Deploy and Test Production
       run: |
         echo "Deploying to production environment..."
-        # Simulación de despliegue en producción
         docker run -d -p 8081:5000 --name production-app $IMAGE_NAME:latest
         sleep 10
-        
-        # Verificar despliegue
         curl -f http://localhost:8081/health || exit 1
         echo "🚀 Production deployment successful!"

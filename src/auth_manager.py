@@ -4,7 +4,7 @@ Módulo para gestión de API Keys y validación JWT
 
 import uuid
 from datetime import datetime, timedelta, timezone
-from typing import Dict, Any
+from typing import Any, Dict
 
 import jwt
 

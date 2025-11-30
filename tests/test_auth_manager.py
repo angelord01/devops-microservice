@@ -1,5 +1,6 @@
-import pytest
 import jwt
+import pytest
+
 from src.auth_manager import APIManager
 
 
