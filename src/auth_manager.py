@@ -2,11 +2,9 @@
 Módulo para gestión de API Keys y validación JWT
 """
 
-import os
-import time
 import uuid
 from datetime import datetime, timedelta, timezone
-from typing import Any, Dict, Optional
+from typing import Dict, Any
 
 import jwt
 
@@ -17,7 +15,7 @@ class APIManager:
         self.required_api_key = "2f5ae96c-b558-4c7b-a590-a501ae1c3f6c"
 
         # En producción, esto vendría de variables de entorno o secret manager
-        self.jwt_secret = os.getenv("JWT_SECRET", "devops-assessment-secret-key")
+        self.jwt_secret = "devops-assessment-secret-key"
         self.jwt_algorithm = "HS256"
 
         # Registro de transacciones (en producción usaríamos una base de datos)

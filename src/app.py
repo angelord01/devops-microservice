@@ -1,7 +1,5 @@
+from flask import Flask, request, jsonify
 import logging
-import os
-
-from flask import Flask, jsonify, request
 
 from .auth_manager import api_manager  # Importación relativa corregida
 

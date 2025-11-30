@@ -1,8 +1,5 @@
-import time
-
-import jwt
 import pytest
-
+import jwt
 from src.auth_manager import APIManager
 
 
@@ -14,13 +11,13 @@ def auth_manager():
 def test_validate_correct_api_key(auth_manager):
     """Test que valida una API Key correcta"""
     valid_api_key = "2f5ae96c-b558-4c7b-a590-a501ae1c3f6c"
-    assert auth_manager.validate_api_key(valid_api_key) == True
+    assert auth_manager.validate_api_key(valid_api_key) is True
 
 
 def test_validate_incorrect_api_key(auth_manager):
     """Test que rechaza una API Key incorrecta"""
     invalid_api_key = "invalid-api-key-123"
-    assert auth_manager.validate_api_key(invalid_api_key) == False
+    assert auth_manager.validate_api_key(invalid_api_key) is False
 
 
 def test_generate_and_validate_jwt(auth_manager):
@@ -84,7 +81,3 @@ def test_invalid_jwt(auth_manager):
     """Test con JWT inválido"""
     with pytest.raises(jwt.InvalidTokenError):
         auth_manager.validate_jwt("invalid.jwt.token")
-
-
-if __name__ == "__main__":
-    pytest.main([__file__])

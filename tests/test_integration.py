@@ -1,8 +1,5 @@
-import json
-
 import pytest
-import requests
-
+import json
 from src.app import app
 from src.auth_manager import api_manager
 
@@ -99,7 +96,3 @@ def test_error_scenarios_integration(client):
     response = client.get("/DevOps")
     assert response.status_code == 405
     assert b"ERROR" in response.data
-
-
-if __name__ == "__main__":
-    pytest.main([__file__, "-v"])
